@@ -1,12 +1,15 @@
-const mongoose = require("mongoose")
+require("dotenv").config()
 
+const mongoose = require("mongoose")
 /* rutas y usuarios de la db */
 
 /* usuario db */
-const userG = "userG"
-const passwordDbuserG = "7Jw08Pcph5gs5TSn"
+const userG = process.env.USERG
+const passwordDbuserG = process.env.PASSWORDUSERG
+
 
 const db = "blogPr"
+
 
 
 /* url db */
