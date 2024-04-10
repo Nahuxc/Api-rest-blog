@@ -1,6 +1,10 @@
 const fs = require("fs")
+const path = require("path")
 const { validatorArticles } = require("../helpers/validatorElement")
 const Article = require("../models/Article");
+
+
+
 
 /* obtener todos los articulos */
 const initArticles = (req, res) => {
@@ -32,6 +36,8 @@ const initArticles = (req, res) => {
 
 };
 
+
+
 /* buscar el articulo por id */
 const findOneArticle = (req, res) => {
     let { pid } = req.params
@@ -49,6 +55,8 @@ const findOneArticle = (req, res) => {
         });
     });
 };
+
+
 
 
 
@@ -97,6 +105,9 @@ const create = (req, res) => {
 
 
 
+
+
+
 /* actualizar/editar un articulo */
 const putArticle = (req, res) => {
     /* obtener el id */
@@ -135,6 +146,8 @@ const putArticle = (req, res) => {
 
 
 
+
+
 /* eliminar un articulo */
 const deleteArticle = (req, res) => {
 
@@ -158,6 +171,12 @@ const deleteArticle = (req, res) => {
 
 };
 
+
+
+
+
+
+
 /* subir imagenes */
 
 const uploadImg = (req, res) => {
@@ -168,7 +187,6 @@ const uploadImg = (req, res) => {
             mensaje: "peticion invalida"
         })
     }
-
 
     /* nombre del archivo */
 
@@ -198,7 +216,7 @@ const uploadImg = (req, res) => {
             return res.status(200).json({
                 status: "success",
                 article: articleUpdate,
-                fichero: req.file,
+                fileData: req.file,
                 mensaje: "articulo Actualizado"
             });
         }).catch((err) => {
@@ -217,11 +235,67 @@ const uploadImg = (req, res) => {
 
 
 
+
+
+
+/* obtener imagen en formato*/
+const getImg = (req, res) =>{
+    let filedata  = req.params.filedata
+    let route_file = "./img/articles/" + filedata
+
+    fs.stat(route_file, (error, exist)=>{
+        if(exist){
+            console.log(exist);
+            return res.sendFile(path.resolve(route_file))
+        }else{
+            return res.status(404).json({
+                status:"error",
+                mensaje: "la imagen no existe",
+                existsw: exist,
+                filedata
+            })
+        }
+    })
+}
+
+
+
+/* buscador de articulos */
+const searchFun = (req, res) =>{
+    
+    /* sacar el string de busqueda */
+    let {searchdata} = req.params
+
+    /* find  */
+    Article.find({ "$or": [
+        {"title": {"$regex": searchdata, "$options": "i"}},
+        {"content": {"$regex": searchdata, "$options": "i"}}
+    ]})
+    .sort({date: -1})
+    .then((articleSearch)=>{
+        return res.status(200).json({
+            status: "success",
+            article: articleSearch
+        })
+    }).catch((err)=>{
+        return res.status(404).json({
+            status:"error",
+            mensaje: "No se han encontrado articulos"
+        })
+    })
+}
+
+
+
+
+
 module.exports = {
     initArticles,
     findOneArticle,
     create,
     putArticle,
     uploadImg,
+    getImg,
+    searchFun,
     deleteArticle
 }
