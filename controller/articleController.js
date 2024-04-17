@@ -9,30 +9,28 @@ const Article = require("../models/Article");
 /* obtener todos los articulos */
 const initArticles = (req, res) => {
 
-    let getdataArticle = Article.find({});
+        let getdataArticle = Article.find({});
 
-    let { limit } = req.params;
+        let { limit } = req.params;
 
-    if (limit) {
-        getdataArticle.limit(Number(limit))
-    };
+        if (limit) {
+            getdataArticle.limit(Number(limit))
+        };
 
-    getdataArticle.sort({ date: -1 })
-        .then((article) => { /* obtenemos todos los datos de la db */
-
-            return res.status(200).send({
-                status: "success",
-                parametro_url_limite: limit,
-                article
+        getdataArticle.sort({ date: -1 })
+            .then((article) => { /* obtenemos todos los datos de la db */
+                return res.status(200).send({
+                    status: "success",
+                    parametro_url_limite: limit,
+                    article
+                });
+            }).catch((err) => {
+                return res.status(400).json({
+                    status: "error",
+                    mensaje: "faltan datos",
+                    error: err
+                });
             });
-
-        }).catch((err) => {
-            return res.status(400).json({
-                status: "error",
-                mensaje: "faltan datos",
-                error: err
-            });
-        });
 
 };
 

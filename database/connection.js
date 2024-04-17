@@ -3,9 +3,8 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 /* rutas y usuarios de la db */
 
-/* usuario db */
-const userG = process.env.USERG
-const passwordDbuserG = process.env.PASSWORDUSERG
+const USER = process.env.USER
+const PASSWORD = process.env.PASSWORD
 
 
 const db = "blogPr"
@@ -13,7 +12,7 @@ const db = "blogPr"
 
 
 /* url db */
-const url = `mongodb+srv://${userG}:${passwordDbuserG}@blog.vq5sxjw.mongodb.net/${db}`
+const url = `mongodb+srv://${USER}:${PASSWORD}@blog.vq5sxjw.mongodb.net/${db}`
 
 const connection = async ()=>{
     try {
