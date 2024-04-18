@@ -8,9 +8,17 @@ const ArticleSchema = Schema({
         type: String,
         required:true
     },
+    country: {
+        type: String,
+        required:true
+    },
     content: {
         type: String,
         required:true
+    },
+    creator:{
+        type: String,
+        required: true
     },
     date:{
         type: Date,
