@@ -6,10 +6,7 @@ const mongoose = require("mongoose")
 const USER = process.env.USER
 const PASSWORD = process.env.PASSWORD
 
-
 const db = "blogPr"
-
-
 
 /* url db */
 const url = `mongodb+srv://${USER}:${PASSWORD}@blog.vq5sxjw.mongodb.net/${db}`

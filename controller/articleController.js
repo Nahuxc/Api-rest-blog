@@ -114,18 +114,6 @@ const putArticle = (req, res) => {
     /* obtener los nuevos datos ingresados a actualizar */
     let newDataArticle = req.body;
 
-    /* validacion de datos */
-
-    try {
-        validatorArticles(newDataArticle)
-    } catch (err) {
-        return res.status(400).json({
-            status: "error",
-            mensaje: "faltan datos"
-        });
-    };
-
-
     /* buscamos y actualizamos el articulo */
     Article.findOneAndUpdate({ _id: pid }, newDataArticle, { new: true }).then((articleUpdate) => {
         return res.status(200).json({
