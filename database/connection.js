@@ -3,24 +3,20 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 /* rutas y usuarios de la db */
 
-const USER = process.env.USER
-const PASSWORD = process.env.PASSWORD
+/* url Conexion */
+const URLMONGO = process.env.URLMONGO
 
-const db = "blogPr"
-
-/* url db */
-const url = `mongodb+srv://${USER}:${PASSWORD}@blog.vq5sxjw.mongodb.net/${db}`
 
 const connection = async ()=>{
     try {
-        await mongoose.connect(url)
+        await mongoose.connect(URLMONGO)
 
         /*  AVISO:
             solo usar en caso de errores de conexion
             useNewUrlParser : true,
             useUnifiedTopology: true,
             useCreateIndex: true */
-        console.log(`conectado correctamente a la base de datos: ${db}`);
+        console.log(`conectado correctamente a la base de datos`);
 
     } catch (err) {
         console.log(err);
